@@ -10,6 +10,13 @@ class EntradaGeneral extends Entrada {
         super(id, precioBase, fecha);
     }
 
+    public String toString(){
+        return "ID" + getId()
+                + " Precio" + getPrecioBase()
+                + " Fecha" + getFecha();
+
+    }
+
    @Override
     double precioFinal() {
         return this.getPrecioBase();

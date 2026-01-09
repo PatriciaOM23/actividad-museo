@@ -38,6 +38,13 @@ public abstract class Entrada {
         this.precioBase = precioBase;
         this.id = id;
     }
+
+    public String toString(){
+        return " ID" + id
+                + " Precio" + precioBase
+                + " Fecha" + fecha;
+
+    }
     // LE DECIMOS QUE LOS HIJOS DE ENTRADA TENGAN QUE CALCULAR ESTO SI O SI PERO NO LE DECIMOS COMO LO CALCULA
     abstract double precioFinal();
     abstract String descripcion();

@@ -12,22 +12,30 @@ class EntradaVIP extends Entrada implements Descontable, ConAccesoRapido {
         this.nivelPrioridad = nivelPrioridad;
     }
 
+    @Override
+    public String toString(){
+        return "ID" + getId()
+                + "Precio: " + precioFinal()
+                + " Fecha: " + getFecha()
+                + " Zona VIP: " + zonaVIP
+                + " Nivel Prioridad: " + nivelPrioridad;
 
+
+    }
     @Override
     public double aplicarDescuento(int porcentaje) {
-        double descuento = porcentaje /100;
-        return this.getPrecioBase() * (1 - descuento);
+        return this.getPrecioBase() * (1 - porcentaje / 100.0);
 
     }
 
     @Override
     public int prioridadAcceso() {
-        return 0;
+        return this.nivelPrioridad ;
     }
 
     @Override
     double precioFinal() {
-        return aplicarDescuento(20);
+        return this.aplicarDescuento(20);
     }
 
     @Override

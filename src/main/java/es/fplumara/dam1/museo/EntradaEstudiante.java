@@ -11,11 +11,18 @@ class EntradaEstudiante extends Entrada implements Descontable{
 
     }
 
+    @Override
+    public String toString(){
+        return "ID" + getId()
+                + "Precio: " + precioFinal()
+                + " Fecha: " + getFecha()
+                + " Centro Educativo: " + centroEducativo;
 
+
+    }
     @Override
     public double aplicarDescuento(int porcentaje) {
-        double descuento = porcentaje /100;
-        return this.getPrecioBase() * (1 - descuento);
+        return this.getPrecioBase() * (1 - porcentaje /100.0);
     }
 
     @Override

@@ -6,21 +6,38 @@ import java.util.List;
 
 public class Main {
 
-    public static double recaudacionTotal(List <Entrada> entradas){
-
-        double recaudaciontotal = entradas.stream()
+    public static double recaudacionTotal(List<Entrada> entradas) {
+        return entradas.stream()
                 .mapToDouble(Entrada::getPrecioBase)
                 .sum();
-
-        return recaudaciontotal;
     }
 
     public static double recaudacionConDescuento(List<Entrada> entradas) {
-        // NO APLICA EL DESCUENTO
-        double recaudacionConDescuento = entradas.stream()
-                .mapToDouble(Entrada::getPrecioBase)
+        // AHORA CALCULAMOS EN BASE A PRECIO FINAL
+        return entradas.stream()
+                .mapToDouble(Entrada::precioFinal)
                 .sum();
-        return recaudacionConDescuento;
+    }
+
+    public static long contadorAccesoRapido (List <Entrada> entradas){
+        return entradas.stream()
+                .filter(entrada -> entrada instanceof ConAccesoRapido)
+                .count();
+    }
+
+    public static void soloDescontables(List <Entrada> entradas) {
+
+        List<Entrada> entradasDescontables = entradas.stream()
+                .filter(entradaDescontable -> entradaDescontable instanceof Descontable)
+                .toList();
+
+    }
+
+    public static double entradaMasCara(List <Entrada> entradas){
+        return entradas.stream()
+                .mapToDouble(Entrada::precioFinal)
+                .max()
+                .orElse(0);
     }
 
     public static void main(String[] args) {
@@ -34,13 +51,16 @@ public class Main {
 
         entradas.add(new EntradaVIP("E-100", 20.0, LocalDate.of(2026, 1, 12), "Sala Impresionistas", 3));
         entradas.add(new EntradaVIP("E-101", 25.0, LocalDate.of(2026, 1, 12), "Backstage exposición", 5));
-
         double recaudacionTotal = recaudacionTotal(entradas);
         double recaudacionConDescuento = recaudacionConDescuento(entradas);
-
-
-        System.out.println(recaudacionTotal);
-
-        System.out.println(recaudacionConDescuento);
-    }
+        long contadorAccesoRapido = contadorAccesoRapido(entradas);
+        double entradaMasCara = entradaMasCara(entradas);
+        System.out.println("Recaudación total: " + recaudacionTotal);
+        System.out.println("Recaudación con descuento: " +recaudacionConDescuento);
+        System.out.println("Cuantos hay con acceso rápido: " + contadorAccesoRapido);
+        System.out.println("Entrada más cara: " + entradaMasCara);
+        entradas.removeIf(e -> e instanceof EntradaGeneral );
+        System.out.println("-----------------\n LISTA FINAL\n-----------------");
+        entradas.forEach(System.out::println);
+        }
 }
